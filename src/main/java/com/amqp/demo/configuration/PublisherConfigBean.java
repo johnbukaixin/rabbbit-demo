@@ -33,6 +33,19 @@ public class PublisherConfigBean {
         rabbitAdmin.declareQueue(queue);
         return queue;
     }
+    @Bean
+    Queue queueSmsCodeSender2(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue("demo.smscodesender.demo.demo", true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
+    Queue queueSmsCodeSender3(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue("queue.other", true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
 
     //exchange 声明交换：exchange.smscodesender
     @Bean
@@ -45,7 +58,7 @@ public class PublisherConfigBean {
     //绑定exchange和queue
     @Bean
     Binding bindingExchangeSmsCodeSender(Queue queueSmsCodeSender, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueSmsCodeSender).to(exchange).with("queue.smscodesender");
+        Binding binding = BindingBuilder.bind(queueSmsCodeSender).to(exchange).with("queue.smscodesender.*");
         rabbitAdmin.declareBinding(binding);
         return binding;
     }

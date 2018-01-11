@@ -22,8 +22,8 @@ public class MsgRecevieConsumer {
     @RabbitListener(queues = "queue.smscodesender")
     public void receiveSmsCodeSenderQueue(String payload) {
         System.out.printf(payload);
-        Notification notification = JSON.parseObject(payload,Notification.class);
-        System.out.printf(notification.toString());
+//        Notification notification = JSON.parseObject(payload,Notification.class);
+//        System.out.printf(notification.toString());
     }
 
 
