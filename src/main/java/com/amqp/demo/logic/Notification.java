@@ -17,8 +17,6 @@ public class Notification {
 
     private String payLoad;
 
-    private List<String> payloads;
-
     public Integer getId() {
         return id;
     }
@@ -49,24 +47,5 @@ public class Notification {
 
     public void setPayLoad(String payLoad) {
         this.payLoad = payLoad;
-    }
-
-    public List<String> getPayloads() {
-        return payloads;
-    }
-
-    public void setPayloads(List<String> payloads) {
-        this.payloads = payloads;
-    }
-
-    @Override
-    public String toString() {
-        return "Notification{" +
-                "id=" + id +
-                ", messageId=" + messageId +
-                ", properties='" + properties + '\'' +
-                ", payLoad='" + payLoad + '\'' +
-                ", payloads=" + payloads +
-                '}';
     }
 }

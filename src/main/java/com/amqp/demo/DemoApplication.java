@@ -26,12 +26,7 @@ public class DemoApplication implements CommandLineRunner{
 		notification.setId(1);
 		notification.setMessageId(1);
 		notification.setPayLoad("hello world");
-		List<String> payLoads = new ArrayList<>();
-		payLoads.add("demo");
-		payLoads.add("test");
-		notification.setPayloads(payLoads);
 		String jsonString = JSON.toJSONString(notification);
-		System.out.printf(jsonString);
 		senderService.sendSmsCodeRequest2RabbitMq(JSON.toJSONString(jsonString));
 	}
 }

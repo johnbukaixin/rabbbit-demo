@@ -21,20 +21,10 @@ public class MsgRecevieConsumer {
     //监听队列queue.smscodesender
     @RabbitListener(queues = "queue.smscodesender")
     public void receiveSmsCodeSenderQueue(String payload) {
-        Notification notification  = JSON.parseObject(payload,Notification.class);
-        System.out.println(notification);
+        System.out.printf(payload);
+        Notification notification = JSON.parseObject(payload,Notification.class);
+        System.out.printf(notification.toString());
     }
 
-    public static void main(String[] args) {
-        Notification notification = new Notification();
-        notification.setId(1);
-        notification.setMessageId(1);
-        notification.setPayLoad("hello world");
-        List<String> strings = new ArrayList<>();
-        strings.add("demo");
-        strings.add("test");
-        notification.setPayloads(strings);
-        String jsonString = JSON.toJSONString(notification);
-        System.out.printf(jsonString);
-    }
+
 }
