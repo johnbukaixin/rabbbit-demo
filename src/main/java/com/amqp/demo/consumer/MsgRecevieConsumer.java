@@ -11,19 +11,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class MsgRecevieConsumer {
 
-    //监听队列queue.smscodesender
+    /**
+     * 监听队列queue.smscodesender
+     * @param payload
+     */
     @RabbitListener(queues = "queue.smscodesender")
     public void receiveSmsCodeSenderQueue(String payload) {
         System.out.println("Queue [queue.smscodesender] recevie: "+ payload);
     }
 
-    //监听队列queue.demo.smscodesender.demo.demo
+    /**
+     * 监听队列queue.demo.smscodesender.demo.demo
+     * @param payload
+     */
     @RabbitListener(queues = "demo.smscodesender.demo.demo")
     public void receiveSmsCodeSenderQueue1(String payload) {
         System.out.println("Queue [demo.smscodesender.demo.demo] recevie: " + payload);
 
     }
-    //监听队列queue.other
+    /**
+     * 监听队列queue.other
+     */
     @RabbitListener(queues = "queue.other")
     public void receiveSmsCodeSenderQueue2(String payload) {
         System.out.println("Queue [queue.other] recevie: " + payload);

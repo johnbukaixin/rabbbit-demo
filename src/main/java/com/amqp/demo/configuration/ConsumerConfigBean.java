@@ -28,7 +28,11 @@ public class ConsumerConfigBean implements RabbitListenerConfigurer{
         return factory;
     }
 
-    //queue listener 观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象
+    /**
+     * queue listener 观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象
+     * @param connectionFactory
+     * @return
+     */
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
             ConnectionFactory connectionFactory) {

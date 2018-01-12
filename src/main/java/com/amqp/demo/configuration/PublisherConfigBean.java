@@ -20,13 +20,19 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 @Configuration
 public class PublisherConfigBean {
 
-    //rabbitAdmin 用于管理 exchanges, queues and bindings等
+    /**
+     * rabbitAdmin 用于管理 exchanges, queues and bindings等
+     */
     @Bean
     RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
 
-    //queue 声明队列：queue.smscodesender
+    /**
+     * queue 声明队列：queue.smscodesender
+     * @param rabbitAdmin
+     * @return
+     */
     @Bean
     Queue queueSmsCodeSender(RabbitAdmin rabbitAdmin) {
         Queue queue = new Queue("queue.smscodesender", true);
@@ -47,7 +53,11 @@ public class PublisherConfigBean {
         return queue;
     }
 
-    //exchange 声明交换：exchange.smscodesender
+    /**
+     * exchange 声明交换：exchange.smscodesender
+     * @param rabbitAdmin
+     * @return
+     */
     @Bean
     TopicExchange exchange(RabbitAdmin rabbitAdmin) {
         TopicExchange topicExchange = new TopicExchange("exchange.smscodesender");
@@ -55,7 +65,13 @@ public class PublisherConfigBean {
         return topicExchange;
     }
 
-    //绑定exchange和queue
+    /**
+     * 绑定exchange和queue
+     * @param queueSmsCodeSender
+     * @param exchange
+     * @param rabbitAdmin
+     * @return
+     */
     @Bean
     Binding bindingExchangeSmsCodeSender(Queue queueSmsCodeSender, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueSmsCodeSender).to(exchange).with("*.orange.*");
@@ -63,7 +79,13 @@ public class PublisherConfigBean {
         return binding;
     }
 
-    //绑定exchange和queue
+    /**
+     * 绑定exchange和queue
+     * @param queueSmsCodeSender2
+     * @param exchange
+     * @param rabbitAdmin
+     * @return
+     */
     @Bean
     Binding bindingExchangeSmsCodeSender1(Queue queueSmsCodeSender2, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueSmsCodeSender2).to(exchange).with("*.*.rabbit");
@@ -71,7 +93,13 @@ public class PublisherConfigBean {
         return binding;
     }
 
-    //绑定exchange和queue
+    /**
+     * 绑定exchange和queue
+     * @param queueSmsCodeSender3
+     * @param exchange
+     * @param rabbitAdmin
+     * @return
+     */
     @Bean
     Binding bindingExchangeSmsCodeSender2(Queue queueSmsCodeSender3, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueSmsCodeSender3).to(exchange).with("lazy.#");
@@ -80,7 +108,11 @@ public class PublisherConfigBean {
     }
 
 
-    //声明 spring template
+    /**
+     * 声明 spring template
+     * @param rabbitTemplate
+     * @return
+     */
     @Bean
     public RabbitMessagingTemplate rabbitMessagingTemplate(RabbitTemplate rabbitTemplate) {
         RabbitMessagingTemplate rabbitMessagingTemplate = new RabbitMessagingTemplate();
@@ -89,7 +121,10 @@ public class PublisherConfigBean {
         return rabbitMessagingTemplate;
     }
 
-    //消息对象json转换类
+    /**
+     * 消息对象json转换类
+     * @return
+     */
     @Bean
     public MappingJackson2MessageConverter jackson2Converter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
