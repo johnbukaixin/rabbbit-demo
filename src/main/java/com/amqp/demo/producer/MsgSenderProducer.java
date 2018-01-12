@@ -16,6 +16,10 @@ public class MsgSenderProducer {
     private RabbitMessagingTemplate rabbitMessagingTemplate;
 
     public void sendSmsCodeRequest2RabbitMq(final String payload) {
-        this.rabbitMessagingTemplate.convertAndSend("exchange.smscodesender", "queue.smscodesender.*", payload);
+        this.rabbitMessagingTemplate.convertAndSend("exchange.smscodesender", "quick.orange.rabbit", payload);
     }
+    public void sendSmsCodeRequest2RabbitMq1(final String payload) {
+        this.rabbitMessagingTemplate.convertAndSend("exchange.smscodesender", "lazy.pink.rabbit", payload);
+    }
+
 }

@@ -58,10 +58,27 @@ public class PublisherConfigBean {
     //绑定exchange和queue
     @Bean
     Binding bindingExchangeSmsCodeSender(Queue queueSmsCodeSender, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueSmsCodeSender).to(exchange).with("queue.smscodesender.*");
+        Binding binding = BindingBuilder.bind(queueSmsCodeSender).to(exchange).with("*.orange.*");
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
+
+    //绑定exchange和queue
+    @Bean
+    Binding bindingExchangeSmsCodeSender1(Queue queueSmsCodeSender2, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueSmsCodeSender2).to(exchange).with("*.*.rabbit");
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    //绑定exchange和queue
+    @Bean
+    Binding bindingExchangeSmsCodeSender2(Queue queueSmsCodeSender3, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueSmsCodeSender3).to(exchange).with("lazy.#");
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
 
     //声明 spring template
     @Bean

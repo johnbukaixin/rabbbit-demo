@@ -23,10 +23,14 @@ public class DemoApplication implements CommandLineRunner{
 	@Override
 	public void run(String... strings) throws Exception {
 		Notification notification = new Notification();
-		notification.setId(1);
-		notification.setMessageId(1);
-		notification.setPayLoad("hello world");
-		String jsonString = JSON.toJSONString(notification);
-		senderService.sendSmsCodeRequest2RabbitMq(JSON.toJSONString(jsonString));
+		Random random = new Random();
+//		while (true){
+			notification.setId(1);
+			notification.setMessageId(random.nextInt());
+			notification.setPayLoad("hello world");
+			String jsonString = JSON.toJSONString(notification);
+			senderService.sendSmsCodeRequest2RabbitMq(JSON.toJSONString(jsonString));
+			senderService.sendSmsCodeRequest2RabbitMq1(JSON.toJSONString(jsonString));
+//		}
 	}
 }
