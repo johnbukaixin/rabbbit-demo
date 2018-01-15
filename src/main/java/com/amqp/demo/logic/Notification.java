@@ -1,5 +1,8 @@
 package com.amqp.demo.logic;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,13 +10,15 @@ import java.util.List;
  *
  * @author panta
  */
-public class Notification {
+public class Notification implements Serializable{
+
+
+    private static final long serialVersionUID = 1745053020383632812L;
 
     private Integer id;
 
     private Integer messageId;
 
-    private String properties;
 
     private String payLoad;
 
@@ -33,13 +38,6 @@ public class Notification {
         this.messageId = messageId;
     }
 
-    public String getProperties() {
-        return properties;
-    }
-
-    public void setProperties(String properties) {
-        this.properties = properties;
-    }
 
     public String getPayLoad() {
         return payLoad;
@@ -48,4 +46,18 @@ public class Notification {
     public void setPayLoad(String payLoad) {
         this.payLoad = payLoad;
     }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", messageId=" + messageId +
+                ", payLoad='" + payLoad + '\'' +
+                '}';
+    }
+
+    public Notification() {
+    }
+
+
 }
