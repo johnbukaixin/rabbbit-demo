@@ -8,6 +8,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -22,6 +23,9 @@ import org.springframework.messaging.handler.annotation.support.DefaultMessageHa
 @EnableRabbit
 public class ConsumerConfigBean implements RabbitListenerConfigurer{
 
+    @Autowired
+    private PropertiesConfiguration configuration;
+
     @Bean
     public DefaultMessageHandlerMethodFactory myHandlerMethodFactory() {
         DefaultMessageHandlerMethodFactory factory = new DefaultMessageHandlerMethodFactory();
@@ -29,24 +33,6 @@ public class ConsumerConfigBean implements RabbitListenerConfigurer{
         return factory;
     }
 
-//    /**
-//     * queue listener 观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象
-//     * @param connectionFactory
-//     * @return
-//     */
-//    @Bean
-//    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
-//            ConnectionFactory connectionFactory) {
-//        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-//        factory.setConnectionFactory(connectionFactory);
-//        // factory.setPrefetchCount(5);//指定一个请求能处理多少个消息，如果有事务的话，必须大于等于transaction数量.
-////        factory.setAcknowledgeMode(AcknowledgeMode.AUTO);
-//
-//        //MANUAL：将ACK修改为手动确认，避免消息在处理过程中发生异常造成被误认为已经成功消费的假象。
-//        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-//
-//        return factory;
-//    }
     @Override
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
         registrar.setMessageHandlerMethodFactory(myHandlerMethodFactory());
@@ -62,7 +48,8 @@ public class ConsumerConfigBean implements RabbitListenerConfigurer{
     public MessageListenerContainer messageListenerContainer(ConnectionFactory connectionFactory) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
-        container.setQueueNames("queue.smscodesender","queue.other");
+        //设置需要监听的队列，值为配置文件中配置的队列名称
+        container.setQueueNames(configuration.parseConfigQueueName());
         container.setMessageListener(TopicConsumerConfiguration.exampleListener1());
         container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
         return container;
