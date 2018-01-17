@@ -1,6 +1,5 @@
 package com.amqp.demo.configuration;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +10,7 @@ import org.springframework.stereotype.Component;
  * @author panta
  */
 @Component
-@ConfigurationProperties(prefix = "demo.config")
-@Data
+@ConfigurationProperties(prefix = "demo.config.*")
 public class PropertiesConfiguration {
 
     private String exchangeName;
@@ -47,15 +45,16 @@ public class PropertiesConfiguration {
 
     /**
      * 将获取到的配置文件中以空格隔开的多个队列名称，解析后存入list
+     * @param configQueueName 配置文件中的队列值
      * @return
      */
-    public  String[] parseConfigQueueName(){
-        String[] queues = this.queueName.split(" ");
+    public static String[] parseConfigQueueName(String configQueueName){
+        String[] queues = configQueueName.split(" ");
         return queues;
     }
 
-    public  String[] parseConfigExchangeName(){
-        String[] exchanges = this.exchangeName.split(" ");
+    public static String[] parseConfigExchangeName(String exchangeName){
+        String[] exchanges = exchangeName.split(" ");
         return exchanges;
     }
 }
