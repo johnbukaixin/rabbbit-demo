@@ -29,6 +29,7 @@ public class MsgSenderProducer implements RabbitTemplate.ConfirmCallback{
         CorrelationData correlationId = new CorrelationData(UUID.randomUUID().toString());
         this.rabbitTemplate.convertAndSend("exchange.smscodesender", "quick.orange.rabbit", payload,correlationId);
     }
+
     public void sendSmsCodeRequest2RabbitMq1(final String payload) {
         this.rabbitTemplate.convertAndSend("exchange.smscodesender", "lazy.pink.rabbit", payload);
     }
